@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>Index.page</title>
+    <html>
+    <head>
+        <title>Index page</title>
+    </head>
+    <body>
+        <h1>Main page</h1>
+        {% if error|length %}
+            <p style="color: #11ff00;">{{ error }}</p>
+        {% endif %}
+        <div>
+            <form action="" method="POST">
+                {% csrf_token %}
+                {{ form.errors }}
+                {% for field in form %}
+                    <div class="field-wrapper">
+                        {{ field.label_tag }} {{ field }}
+                        <div class="text-danger">
+                            {{ field.errors }}
+                        </div>
+                    </div>
+                {% endfor %}
+                <button type="submit">Create Todo</button>
+            </form>
+        </div>
+        {% if todos|length > 0 %}
+            <ol>
+                {% for todo in todos %}
+                <li>{{ todo.title }} -- Due: {{ todo.due_date }} <a href="/{{todo.id}}/delete"><button>Delete</button></a></li>
+                {% endfor %}
+            </ol>
+        {% else %}
+            <p>No Todos Found</p>
+        {% endif %}
+    </body>
+</html>
